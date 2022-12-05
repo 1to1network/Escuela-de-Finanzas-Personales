@@ -137,13 +137,13 @@ window.addEventListener("DOMContentLoaded", async (e) => {
     const arr = [];
     querySnapshot.forEach((doc) => {
       const task = doc.data();
-
+      const formato = new Intl.NumberFormat('de-DE');
       // const sumatotal = ;
 
 
       if (task.title == "Gastos") {
         let myString = parseFloat(task.cantidad);
-
+        
         arr.push(myString);
       } else {
 
@@ -155,7 +155,7 @@ window.addEventListener("DOMContentLoaded", async (e) => {
          
  <td>${task.category}</td>
 
- <td>${task.cantidad}</td>
+ <td>${formato.format(task.cantidad)}</td>
  <td>${task.description}</td>
  <td> 
  <div class="btn-group btn-group-sm"> 
@@ -173,8 +173,9 @@ window.addEventListener("DOMContentLoaded", async (e) => {
     });
 
     let total = arr.reduce((a, b) => a + b, 0);
-
-    tasksContainer.innerHTML += `<tr><td>Total</td><td>$` + total + `</td><td></td><td></tr>`
+    const formato = new Intl.NumberFormat('de-DE');
+    // console.log(formato.format(total))
+    tasksContainer.innerHTML += `<tr><td>Total</td><td>$` + formato.format(total) + `</td><td></td><td></tr>`
 
     //console.log(arr.length)
 
@@ -248,7 +249,7 @@ window.addEventListener("DOMContentLoaded", async (e) => {
 
     querySnapshot.forEach((doc) => {
       const task = doc.data();
-
+      const formato = new Intl.NumberFormat('de-DE');
       if (task.title == "Gastos") {
         let myString = parseFloat(task.cantidad);
 
@@ -265,7 +266,7 @@ window.addEventListener("DOMContentLoaded", async (e) => {
          
  <td>${task.category}</td>
  <td>${task.title}</td>
- <td>${task.cantidad}</td>
+ <td>${formato.format(task.cantidad)}</td>
  <td>${task.description}</td>
  <td>  
  <div class="btn-group btn-group-sm"> 
@@ -281,11 +282,12 @@ window.addEventListener("DOMContentLoaded", async (e) => {
     });
     //suma total de los gastos del mes
     let total = arr2.reduce((a, b) => a + b, 0);
+    const formato = new Intl.NumberFormat('de-DE');
 
-    tasksContainer2.innerHTML += `<tr><td>Total</td><td></td><td></td><td>$` + total + `</td><td></td><td></td></tr>`
+    tasksContainer2.innerHTML += `<tr><td>Total</td><td></td><td></td><td>$` + formato.format(total) + `</td><td></td><td></td></tr>`
 
     var totalActual = parseFloat(obtctag) - total;
-    document.getElementById('totalCuenta').innerHTML = "$" + totalActual;
+    document.getElementById('totalCuenta').innerHTML = "$" + formato.format(totalActual);
 
     //obtener el total del mes, para actualizar en el navbar de total
     localStorage.setItem('arreglo2', total);
@@ -404,7 +406,7 @@ botonVerTodo.addEventListener("click", async (e) => {
   e.preventDefault();
 
   tasksContainer3.innerHTML = "";
-
+  const formato = new Intl.NumberFormat('de-DE');
   for (var i = 0; i < arrtotal.length; i++) {
    // console.log(arrtotal[i].category);
     tasksContainer3.innerHTML += `
@@ -413,7 +415,7 @@ botonVerTodo.addEventListener("click", async (e) => {
        
 <td>${arrtotal[i].category}</td>
 <td>${arrtotal[i].title}</td>
-<td>${arrtotal[i].cantidad}</td>
+<td>${formato.format(arrtotal[i].cantidad)}</td>
 <td>${arrtotal[i].description}</td>
  </tr>
  `;

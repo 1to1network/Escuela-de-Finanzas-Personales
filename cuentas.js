@@ -72,7 +72,7 @@ import {
  
     querySnapshot.forEach((doc) => {
       const task = doc.data();
-
+      const formato = new Intl.NumberFormat('de-DE');
       // const sumatotal = ;
      
      
@@ -82,7 +82,7 @@ import {
       <tr >
         <td>${task.nombre}</td>    
          
- <td>$${task.presupuesto}</td>
+ <td>$${formato.format(task.presupuesto)}</td>
  <td>${task.description}</td>
  <td>  
  <div class="btn-group btn-group-sm"> 
