@@ -7,6 +7,15 @@ import {
   saveCat,
   getTotalCtaGral,
   onGetMes,
+  onGetAnual01,
+  onGetAnual02,
+  onGetAnual03,
+  onGetAnual04,
+  onGetAnual05,
+  onGetAnual06,
+  onGetAnual07,
+  onGetAnual08,
+  onGetAnual09,
   onGetAnual10,
   onGetAnual11,
   onGetAnual12,
@@ -55,6 +64,10 @@ const currentMonth = date.getMonth() + 1;
 //const fechaComp = date.getFullYear() + "/" + currentMonth + "/" + date.getDate();
 const fechaComp = currentMonth + "_" + date.getFullYear();
 const fechaRegistrar = date.getDate() + "_" + currentMonth + "_" + date.getFullYear();
+
+const fechaDiaRegistro = date.getDate();
+
+let mesActual = new Intl.DateTimeFormat('es-ES', { month: 'long'}).format(new Date());
 
 console.log(fechaComp);
 
@@ -382,6 +395,96 @@ onGetAnual10((querySnapshot) => {
 menu3.addEventListener("click", async (e) => {
   e.preventDefault();
 
+    //enero
+    onGetAnual01((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const task = doc.data();
+  
+        arrtotal.push(task);
+      })
+    });
+    //febrero
+    onGetAnual02((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const task = doc.data();
+  
+        arrtotal.push(task);
+      })
+    });
+  
+    //marzo
+    onGetAnual03((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const task = doc.data();
+  
+        arrtotal.push(task);
+      })
+    });
+  
+    //abril
+    onGetAnual04((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const task = doc.data();
+  
+        arrtotal.push(task);
+      })
+    });
+  
+    //mayo
+    onGetAnual05((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const task = doc.data();
+  
+        arrtotal.push(task);
+      })
+    });
+  
+    //junio
+    onGetAnual06((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const task = doc.data();
+  
+        arrtotal.push(task);
+      })
+    });
+  
+    //julio
+    onGetAnual07((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const task = doc.data();
+  
+        arrtotal.push(task);
+      })
+    });
+  
+    //agosto
+    onGetAnual08((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const task = doc.data();
+  
+        arrtotal.push(task);
+      })
+    });
+  
+    //septiembre
+    onGetAnual09((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const task = doc.data();
+  
+        arrtotal.push(task);
+      })
+    });
+  
+      //octubre
+      onGetAnual10((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const task = doc.data();
+    
+          arrtotal.push(task);
+        })
+      });
+  
+
   //noviembre
   onGetAnual11((querySnapshot) => {
     querySnapshot.forEach((doc) => {
@@ -411,7 +514,7 @@ botonVerTodo.addEventListener("click", async (e) => {
    // console.log(arrtotal[i].category);
     tasksContainer3.innerHTML += `
     <tr >
-      <td>${arrtotal[i].date}</td>    
+      <td>${arrtotal[i].mesActual}</td>    
        
 <td>${arrtotal[i].category}</td>
 <td>${arrtotal[i].title}</td>
@@ -440,7 +543,7 @@ taskForm.addEventListener("submit", async (e) => {
 
   try {
     if (!editStatus) {
-      await saveTask(fechaRegistrar, title.value, categoria.value, description.value, cantidad.value, uid);
+      await saveTask(fechaDiaRegistro, title.value, categoria.value, description.value, cantidad.value, mesActual,  uid);
       //esto sirve para sumar ingreso a mi total
 
 
@@ -532,6 +635,7 @@ taskForm3.addEventListener("submit", async (e) => {
 
     taskForm3.reset();
     taskForm["task-category"].value = '';
+    alert('Felicidades, agregaste una nueva categoria!')
   } catch (error) {
     console.log(error);
   }
