@@ -512,10 +512,11 @@ botonVerTodo.addEventListener("click", async (e) => {
   const formato = new Intl.NumberFormat('de-DE');
   for (var i = 0; i < arrtotal.length; i++) {
    // console.log(arrtotal[i].category);
+   //<td>${arrtotal[i].mesActual}</td>    
     tasksContainer3.innerHTML += `
     <tr >
-      <td>${arrtotal[i].mesActual}</td>    
-       
+      <td>${arrtotal[i].date}</td>    
+   
 <td>${arrtotal[i].category}</td>
 <td>${arrtotal[i].title}</td>
 <td>${formato.format(arrtotal[i].cantidad)}</td>
