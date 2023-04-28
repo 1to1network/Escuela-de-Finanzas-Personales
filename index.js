@@ -45,6 +45,11 @@ const botonCerrar = document.getElementById("cerrar");
 const botonVerTodo = document.getElementById("miVerTodo");
 
 
+//mostrar graficos del dia y del mes
+const verGraficoDia = document.getElementById("VERDIA");
+const verGraficoMes = document.getElementById("VERMES");
+
+
 //formulario para agregar una nueva categoria
 const taskForm3 = document.getElementById("task-form3");
 const tasksContainerCategory = document.getElementById("task-category");
@@ -83,6 +88,19 @@ botonCerrar.addEventListener("click", async (e) => {
     console.log(error);
   }
 });
+
+verGraficoMes.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  detonar2();
+});
+
+verGraficoDia.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  detonar();
+});
+
 
 
 window.addEventListener("DOMContentLoaded", async (e) => {
@@ -148,6 +166,9 @@ window.addEventListener("DOMContentLoaded", async (e) => {
     tasksContainer.innerHTML = "";
 
     const arr = [];
+    const arrcanvasCategorias = [];
+    const arrcanvasCategoriasytotales = [];
+
     querySnapshot.forEach((doc) => {
       const task = doc.data();
       const formato = new Intl.NumberFormat('de-DE');
@@ -158,6 +179,9 @@ window.addEventListener("DOMContentLoaded", async (e) => {
         let myString = parseFloat(task.cantidad);
         
         arr.push(myString);
+        arrcanvasCategorias.push(task.category);
+        arrcanvasCategoriasytotales.push({ categoria: task.category, total: task.cantidad });
+
       } else {
 
       }
@@ -187,6 +211,8 @@ window.addEventListener("DOMContentLoaded", async (e) => {
 
     let total = arr.reduce((a, b) => a + b, 0);
     const formato = new Intl.NumberFormat('de-DE');
+
+    localStorage.setItem("key", JSON.stringify(arrcanvasCategoriasytotales));
     // console.log(formato.format(total))
     tasksContainer.innerHTML += `<tr><td>Total</td><td>$` + formato.format(total) + `</td><td></td><td></tr>`
 
@@ -212,6 +238,7 @@ window.addEventListener("DOMContentLoaded", async (e) => {
 
             })
             await deleteTask(dataset.id);
+            detonar();
           } else {
 
           }
@@ -220,7 +247,7 @@ window.addEventListener("DOMContentLoaded", async (e) => {
 
 
           await deleteTask(dataset.id);
-
+          detonar();
         } catch (error) {
           console.log(error);
         }
@@ -256,6 +283,7 @@ window.addEventListener("DOMContentLoaded", async (e) => {
   onGetMes((querySnapshot) => {
     tasksContainer2.innerHTML = "";
     const arr2 = [];
+    const arrcanvasgetmes = [];
 
     //ir a mi div para editar
 
@@ -268,6 +296,7 @@ window.addEventListener("DOMContentLoaded", async (e) => {
 
 
         arr2.push(myString);
+        arrcanvasgetmes.push({ categoria: task.category, total: task.cantidad });
       } else {
 
       }
@@ -301,7 +330,7 @@ window.addEventListener("DOMContentLoaded", async (e) => {
 
     var totalActual = parseFloat(obtctag) - total;
     document.getElementById('totalCuenta').innerHTML = "$" + formato.format(totalActual);
-
+    localStorage.setItem("key2", JSON.stringify(arrcanvasgetmes));
     //obtener el total del mes, para actualizar en el navbar de total
     localStorage.setItem('arreglo2', total);
 
@@ -326,6 +355,7 @@ window.addEventListener("DOMContentLoaded", async (e) => {
 
             })
             await deleteTask(dataset.id);
+            detonar2()
           } else {
 
           }
@@ -334,6 +364,7 @@ window.addEventListener("DOMContentLoaded", async (e) => {
 
 
           await deleteTask(dataset.id);
+          detonar2()
         } catch (error) {
           console.log(error);
         }
@@ -354,6 +385,7 @@ window.addEventListener("DOMContentLoaded", async (e) => {
 
           editStatus = true;
           id = doc.id;
+          detonar2()
           taskForm["btn-task-form"].innerText = "Actualizar";
         } catch (error) {
           console.log(error);
@@ -505,6 +537,189 @@ menu3.addEventListener("click", async (e) => {
 });
 
 
+let myChart;
+
+function detonar() {
+
+  var micat = JSON.parse(localStorage.getItem("key"));
+  //console.log(micat)
+
+
+  const arrultcat = [];
+  const arrultotales = [];
+  const rta = micat
+    .map(item => item.categoria)
+    .reduce((obj, categoria, indice) => {
+
+
+      if (obj[categoria]) {
+
+        obj[categoria] = obj[categoria] + parseInt(micat[indice].total);
+
+        // console.log(indice)
+
+      }
+      else {
+
+        obj[categoria] = parseInt(micat[indice].total);
+
+
+
+      }
+
+
+
+      return obj;
+
+
+    }, []);
+
+
+  //console.log(arrultcat)
+  //console.log(rta)
+
+  // Obteniendo todas las claves del JSON
+  for (var clave in rta) {
+    // Controlando que json realmente tenga esa propiedad
+    if (rta.hasOwnProperty(clave)) {
+      // Mostrando en pantalla la clave junto a su valor
+      //alert("La clave es " + clave+ " y el valor es " + rta[clave]);
+      arrultcat.push(clave);
+      arrultotales.push(rta[clave])
+
+    }
+  }
+
+  var ctx = document.getElementById('myChart').getContext("2d");
+  if (myChart) {
+    myChart.destroy();
+  }
+  myChart = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: arrultcat,
+      datasets: [{
+        label: 'cantidad gastada $',
+        data: arrultotales,
+        backgroundColor: [
+          '#ED6464',
+          '#BF6370',
+          '#87586C',
+          '#574759',
+          '#1A1B1C',
+          '#6D2243',
+          '#BA2640',
+          '#EC5E0C',
+          '#F78F1E',
+          '#85871A',
+
+
+        ]
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+        }
+      }
+    }
+  });
+
+}
+
+
+function detonar2() {
+
+  var micat = JSON.parse(localStorage.getItem("key2"));
+  //console.log(micat)
+
+
+  const arrultcat = [];
+  const arrultotales = [];
+  const rta = micat
+    .map(item => item.categoria)
+    .reduce((obj, categoria, indice) => {
+
+
+      if (obj[categoria]) {
+
+        obj[categoria] = obj[categoria] + parseInt(micat[indice].total);
+
+        // console.log(indice)
+
+      }
+      else {
+
+        obj[categoria] = parseInt(micat[indice].total);
+
+
+
+      }
+
+
+
+      return obj;
+
+
+    }, []);
+
+
+  //console.log(arrultcat)
+  //console.log(rta)
+
+  // Obteniendo todas las claves del JSON
+  for (var clave in rta) {
+    // Controlando que json realmente tenga esa propiedad
+    if (rta.hasOwnProperty(clave)) {
+      // Mostrando en pantalla la clave junto a su valor
+      //alert("La clave es " + clave+ " y el valor es " + rta[clave]);
+      arrultcat.push(clave);
+      arrultotales.push(rta[clave])
+
+    }
+  }
+
+  var ctx = document.getElementById('myChart').getContext("2d");
+  if (myChart) {
+    myChart.destroy();
+  }
+  myChart = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: arrultcat,
+      datasets: [{
+        label: 'cantidad gastada $',
+        data: arrultotales,
+        backgroundColor: [
+          '#ED6464',
+          '#BF6370',
+          '#87586C',
+          '#574759',
+          '#1A1B1C',
+          '#6D2243',
+          '#BA2640',
+          '#EC5E0C',
+          '#F78F1E',
+          '#85871A',
+        ]
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+        }
+      }
+    }
+  });
+
+}
+
+
+
 botonVerTodo.addEventListener("click", async (e) => {
   e.preventDefault();
 
@@ -512,11 +727,11 @@ botonVerTodo.addEventListener("click", async (e) => {
   const formato = new Intl.NumberFormat('de-DE');
   for (var i = 0; i < arrtotal.length; i++) {
    // console.log(arrtotal[i].category);
-   //<td>${arrtotal[i].mesActual}</td>    
+   //<td>${arrtotal[i].date}</td>    
     tasksContainer3.innerHTML += `
     <tr >
-      <td>${arrtotal[i].date}</td>    
-   
+ 
+      <td>${arrtotal[i].mesActual}</td> 
 <td>${arrtotal[i].category}</td>
 <td>${arrtotal[i].title}</td>
 <td>${formato.format(arrtotal[i].cantidad)}</td>
@@ -547,7 +762,7 @@ taskForm.addEventListener("submit", async (e) => {
       await saveTask(fechaDiaRegistro, title.value, categoria.value, description.value, cantidad.value, mesActual,  uid);
       //esto sirve para sumar ingreso a mi total
 
-
+      detonar();
       if (title.value == "Ingresos") {
         const ctaG = await getTotalCtaGral();
         const obtctag = ctaG.data().presupuesto;
@@ -579,6 +794,7 @@ taskForm.addEventListener("submit", async (e) => {
         cantidad: cantidad.value,
 
       });
+      detonar();
       //si hay que modificar el ingreso, se debe restar el monto actual y sumar 
       if (title.value == "Ingresos") {
         const ctaG = await getTotalCtaGral();
@@ -635,8 +851,9 @@ taskForm3.addEventListener("submit", async (e) => {
 
 
     taskForm3.reset();
-    taskForm["task-category"].value = '';
-    alert('Felicidades, agregaste una nueva categoria!')
+    taskForm["task-category"].value = newcategory;
+    alert('agregaste una nueva categoría!')
+    $('#myModale').modal('hide')
   } catch (error) {
     console.log(error);
   }
@@ -645,6 +862,9 @@ taskForm3.addEventListener("submit", async (e) => {
 
 
 
+window.addEventListener('load', function() {
+  detonar();
+});
 
 
 

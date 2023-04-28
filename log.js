@@ -76,7 +76,8 @@ formRecuperarContrasena.addEventListener("submit", async (e) => {
   var x = document.getElementById("notRecuperaCon");
 
 
-  const correo = formRecuperarContrasena["email3"];
+  const correo = formRecuperarContrasena["email3"].value;
+  console.log(correo)
 
   if (x.style.display === "none") {
     x.style.display = "block";
@@ -91,7 +92,7 @@ formRecuperarContrasena.addEventListener("submit", async (e) => {
     //console.log(correo.value)
     //  console.log(contrasena.value)
     // localStorage.setItem("IDname", nombre.value);
-    await recuperarContrasena(auth, correo.value)
+    await recuperarContrasena(auth, correo)
 
 
   } catch (error) {

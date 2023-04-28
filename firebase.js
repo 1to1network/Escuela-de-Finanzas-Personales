@@ -74,7 +74,7 @@ export const crearCuenta = (auth, email, password, nombre) =>
       console.log(userCredential.user.uid);
       localStorage.setItem("UserID", userCredential.user.uid);
       localStorage.setItem("IDname", nombre);
-      window.location.href = 'cuentas.html';
+      window.location.href = 'cuentasfirst.html';
       // console.log(IDname);
 
 
@@ -116,6 +116,7 @@ export const recuperarContrasena = (auth, email) =>
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+      alert(errorMessage);
     });
 
 
