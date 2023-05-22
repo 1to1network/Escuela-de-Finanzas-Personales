@@ -14,7 +14,15 @@ const formCrearCuenta = document.getElementById("signup-form2");
 const formIniciarSesion = document.getElementById("signup-form");
 const formRecuperarContrasena = document.getElementById("signup-form3");
 
-
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzCTrM64fNU-CX54mZOBl6Rh9pfb1424zr6PD0GAxUs1bu0SH0YNf2svMMVLE6CyomY/exec'
+const form = document.forms['submit-form']
+console.log(form)
+form.addEventListener('submit', e => {
+  e.preventDefault()
+  fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+    .then(response => console.log('Success!', response))
+    .catch(error => console.error('Error!', error.message))
+})
 // inicio de sesión
 
 formIniciarSesion.addEventListener("submit", async (e) => {
