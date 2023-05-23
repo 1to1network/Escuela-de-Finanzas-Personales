@@ -72,7 +72,7 @@ const fechaRegistrar = date.getDate() + "_" + currentMonth + "_" + date.getFullY
 
 const fechaDiaRegistro = date.getDate();
 
-let mesActual = new Intl.DateTimeFormat('es-ES', { month: 'long'}).format(new Date());
+let mesActual = new Intl.DateTimeFormat('es-ES', { month: 'long' }).format(new Date());
 
 console.log(fechaComp);
 
@@ -138,7 +138,7 @@ window.addEventListener("DOMContentLoaded", async (e) => {
 
     Snapshot.forEach((doc) => {
       const cate = doc.data().categoria;
-     // console.log(cate);
+      // console.log(cate);
 
 
 
@@ -177,7 +177,7 @@ window.addEventListener("DOMContentLoaded", async (e) => {
 
       if (task.title == "Gastos") {
         let myString = parseFloat(task.cantidad);
-        
+
         arr.push(myString);
         arrcanvasCategorias.push(task.category);
         arrcanvasCategoriasytotales.push({ categoria: task.category, total: task.cantidad });
@@ -214,10 +214,10 @@ window.addEventListener("DOMContentLoaded", async (e) => {
 
     localStorage.setItem("key", JSON.stringify(arrcanvasCategoriasytotales));
     // console.log(formato.format(total))
-    tasksContainer.innerHTML += `<tr><td>Total</td><td>$` + formato.format(total) + `</td><td></td><td></tr>`
+    tasksContainer.innerHTML += `<tr><td>Total</td><td>$` + formato.format(total) + `</td><td style='font-size: 0;' id='mytotaldia'>` + total + `</td><td></td></tr>`
 
     //console.log(arr.length)
-
+    detonar();
     const btnsDelete = tasksContainer.querySelectorAll(".btn-delete");
     btnsDelete.forEach((btn) =>
       btn.addEventListener("click", async ({ target: { dataset } }) => {
@@ -326,7 +326,7 @@ window.addEventListener("DOMContentLoaded", async (e) => {
     let total = arr2.reduce((a, b) => a + b, 0);
     const formato = new Intl.NumberFormat('de-DE');
 
-    tasksContainer2.innerHTML += `<tr><td>Total</td><td></td><td></td><td>$` + formato.format(total) + `</td><td></td><td></td></tr>`
+    tasksContainer2.innerHTML += `<tr><td>Total</td><td></td><td style='font-size: 0;' id='mytotalmes'>` + total + `</td><td>$` + formato.format(total) + `</td><td></td><td></td></tr>`
 
     var totalActual = parseFloat(obtctag) - total;
     document.getElementById('totalCuenta').innerHTML = "$" + formato.format(totalActual);
@@ -396,23 +396,23 @@ window.addEventListener("DOMContentLoaded", async (e) => {
   });
 
 
- 
-    //suma total de los gastos del mes
-  
+
+  //suma total de los gastos del mes
 
 
-  });
+
+});
 
 
 
 const arrtotal = [];
 onGetAnual10((querySnapshot) => {
- // tasksContainer3.innerHTML = "";
- 
+  // tasksContainer3.innerHTML = "";
+
 
   querySnapshot.forEach((doc) => {
     const task = doc.data();
-   // console.log(task)
+    // console.log(task)
     arrtotal.push(task);
 
   })
@@ -427,113 +427,113 @@ onGetAnual10((querySnapshot) => {
 menu3.addEventListener("click", async (e) => {
   e.preventDefault();
 
-    //enero
-    onGetAnual01((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const task = doc.data();
-  
-        arrtotal.push(task);
-      })
-    });
-    //febrero
-    onGetAnual02((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const task = doc.data();
-  
-        arrtotal.push(task);
-      })
-    });
-  
-    //marzo
-    onGetAnual03((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const task = doc.data();
-  
-        arrtotal.push(task);
-      })
-    });
-  
-    //abril
-    onGetAnual04((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const task = doc.data();
-  
-        arrtotal.push(task);
-      })
-    });
-  
-    //mayo
-    onGetAnual05((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const task = doc.data();
-  
-        arrtotal.push(task);
-      })
-    });
-  
-    //junio
-    onGetAnual06((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const task = doc.data();
-  
-        arrtotal.push(task);
-      })
-    });
-  
-    //julio
-    onGetAnual07((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const task = doc.data();
-  
-        arrtotal.push(task);
-      })
-    });
-  
-    //agosto
-    onGetAnual08((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const task = doc.data();
-  
-        arrtotal.push(task);
-      })
-    });
-  
-    //septiembre
-    onGetAnual09((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const task = doc.data();
-  
-        arrtotal.push(task);
-      })
-    });
-  
-      //octubre
-      onGetAnual10((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const task = doc.data();
-    
-          arrtotal.push(task);
-        })
-      });
-  
+  //enero
+  onGetAnual01((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      const task = doc.data();
+
+      arrtotal.push(task);
+    })
+  });
+  //febrero
+  onGetAnual02((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      const task = doc.data();
+
+      arrtotal.push(task);
+    })
+  });
+
+  //marzo
+  onGetAnual03((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      const task = doc.data();
+
+      arrtotal.push(task);
+    })
+  });
+
+  //abril
+  onGetAnual04((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      const task = doc.data();
+
+      arrtotal.push(task);
+    })
+  });
+
+  //mayo
+  onGetAnual05((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      const task = doc.data();
+
+      arrtotal.push(task);
+    })
+  });
+
+  //junio
+  onGetAnual06((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      const task = doc.data();
+
+      arrtotal.push(task);
+    })
+  });
+
+  //julio
+  onGetAnual07((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      const task = doc.data();
+
+      arrtotal.push(task);
+    })
+  });
+
+  //agosto
+  onGetAnual08((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      const task = doc.data();
+
+      arrtotal.push(task);
+    })
+  });
+
+  //septiembre
+  onGetAnual09((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      const task = doc.data();
+
+      arrtotal.push(task);
+    })
+  });
+
+  //octubre
+  onGetAnual10((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      const task = doc.data();
+
+      arrtotal.push(task);
+    })
+  });
+
 
   //noviembre
   onGetAnual11((querySnapshot) => {
     querySnapshot.forEach((doc) => {
       const task = doc.data();
 
-      arrtotal.push(task);  
+      arrtotal.push(task);
     })
   });
- //diciembre
+  //diciembre
   onGetAnual12((querySnapshot) => {
-   querySnapshot.forEach((doc) => {
-     const task = doc.data();
-     arrtotal.push(task);
-   })
- });
+    querySnapshot.forEach((doc) => {
+      const task = doc.data();
+      arrtotal.push(task);
+    })
+  });
 
- //se termina evento click 
+  //se termina evento click 
 });
 
 
@@ -543,11 +543,14 @@ function detonar() {
 
   var micat = JSON.parse(localStorage.getItem("key"));
   //console.log(micat)
+  
+  
 
 
   const arrultcat = [];
   const arrultotales = [];
   const rta = micat
+  
     .map(item => item.categoria)
     .reduce((obj, categoria, indice) => {
 
@@ -577,7 +580,7 @@ function detonar() {
 
   //console.log(arrultcat)
   //console.log(rta)
-
+  
   // Obteniendo todas las claves del JSON
   for (var clave in rta) {
     // Controlando que json realmente tenga esa propiedad
@@ -585,7 +588,13 @@ function detonar() {
       // Mostrando en pantalla la clave junto a su valor
       //alert("La clave es " + clave+ " y el valor es " + rta[clave]);
       arrultcat.push(clave);
-      arrultotales.push(rta[clave])
+      //si quieres obtener los totales de cada categoria descomenta
+      //arrultotales.push(rta[clave])
+      //console.log(rta[clave])
+      //aqui hacemos la conversión de cantidad a %
+
+      var porcentaje = Math.round(rta[clave] / parseInt(document.getElementById('mytotaldia').innerHTML) * 100);
+      arrultotales.push(porcentaje);
 
     }
   }
@@ -599,7 +608,7 @@ function detonar() {
     data: {
       labels: arrultcat,
       datasets: [{
-        label: 'cantidad gastada $',
+        label: 'cantidad gastada en %',
         data: arrultotales,
         backgroundColor: [
           '#ED6464',
@@ -676,7 +685,13 @@ function detonar2() {
       // Mostrando en pantalla la clave junto a su valor
       //alert("La clave es " + clave+ " y el valor es " + rta[clave]);
       arrultcat.push(clave);
-      arrultotales.push(rta[clave])
+          //si quieres obtener los totales de cada categoria descomenta
+      //arrultotales.push(rta[clave])
+      //console.log(rta[clave])
+      //aqui hacemos la conversión de cantidad a %
+
+      var porcentaje = Math.round(rta[clave] / parseInt(document.getElementById('mytotalmes').innerHTML) * 100);
+      arrultotales.push(porcentaje);
 
     }
   }
@@ -690,7 +705,7 @@ function detonar2() {
     data: {
       labels: arrultcat,
       datasets: [{
-        label: 'cantidad gastada $',
+        label: 'cantidad gastada en %',
         data: arrultotales,
         backgroundColor: [
           '#ED6464',
@@ -726,8 +741,8 @@ botonVerTodo.addEventListener("click", async (e) => {
   tasksContainer3.innerHTML = "";
   const formato = new Intl.NumberFormat('de-DE');
   for (var i = 0; i < arrtotal.length; i++) {
-   // console.log(arrtotal[i].category);
-   //<td>${arrtotal[i].date}</td>    
+    // console.log(arrtotal[i].category);
+    //<td>${arrtotal[i].date}</td>    
     tasksContainer3.innerHTML += `
     <tr >
  
@@ -738,7 +753,7 @@ botonVerTodo.addEventListener("click", async (e) => {
 <td>${arrtotal[i].description}</td>
  </tr>
  `;
-  } 
+  }
 
 });
 
@@ -759,7 +774,7 @@ taskForm.addEventListener("submit", async (e) => {
 
   try {
     if (!editStatus) {
-      await saveTask(fechaDiaRegistro, title.value, categoria.value, description.value, cantidad.value, mesActual,  uid);
+      await saveTask(fechaDiaRegistro, title.value, categoria.value, description.value, cantidad.value, mesActual, uid);
       //esto sirve para sumar ingreso a mi total
 
       detonar();
@@ -862,9 +877,9 @@ taskForm3.addEventListener("submit", async (e) => {
 
 
 
-window.addEventListener('load', function() {
-  detonar();
+window.addEventListener('load', function () {
+  console.log('ya se cargo el dom');
+ // detonar();
 });
-
 
 
