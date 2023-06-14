@@ -60,7 +60,7 @@
     --bs-warning-rgb: 255, 193, 7;
     --bs-danger-rgb: 253, 126, 20;
     --bs-light-rgb: 233, 233, 232;
-    --bs-dark-rgb: 99, 69, 149;
+    --bs-dark-rgb: 63, 48, 115;
     --bs-white-rgb: 255, 255, 255;
     --bs-black-rgb: 0, 0, 0;
     --bs-body-color-rgb: 255, 255, 255;
@@ -12654,7 +12654,8 @@ fieldset:disabled .btn {
 }
 
 body {
-    background-image: linear-gradient(0deg, #2A4B9B, #F49819, #634595)
+    background-image: linear-gradient(0deg, #71A64B, #61BC42, #3F3073)
+    
 }
 
 .table-secondary {
