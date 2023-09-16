@@ -224,14 +224,20 @@ console.log(usuarioRaiz)
 const date = new Date();
 const currentMonth = date.getMonth() + 1;
 //const fechaComp = date.getFullYear() + "/" + currentMonth +  "/"  +date.getDate();
+
 const fechaComp = currentMonth + "_" + date.getFullYear();
 const fechaMes = currentMonth + "_" + date.getFullYear();
 const fechaDelDia = date.getDate() + "_" + currentMonth + "_" + date.getFullYear();
 //console.log(currentMonth)
 
 //guardar una tarea
-export const saveTask = (date, title, category, description, cantidad, mesActual, uid) =>
-  addDoc(collection(db, usuarioRaiz + "/" + fechaMes), { date, title, category, description, cantidad, mesActual, uid });
+export const saveTask = (date, title, category, description, cantidad, mesActual, mesActualTemp, uid) =>
+addDoc(collection(db, usuarioRaiz + "/" + mesActualTemp), { date, title, category, description, cantidad, mesActual, mesActualTemp, uid });
+
+ 
+  
+
+
 //guardar una nueva categoria
 export const saveCat = (categoria) =>
   addDoc(collection(db, usuarioRaiz + "/categoria"), { categoria });
