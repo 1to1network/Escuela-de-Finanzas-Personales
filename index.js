@@ -884,7 +884,8 @@ taskForm.addEventListener("submit", async (e) => {
         title: title.value,
         category: categoria.value,
         description: description.value,
-        cantidad: cantidad.value
+        cantidad: cantidad.value,
+        date: fechaDiaRegistro
 
 
       });
